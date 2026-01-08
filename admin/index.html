@@ -20,8 +20,8 @@
       CMS.registerMediaLibrary(cloudinary);
 
       // Hardcode the public identifiers (Safe to store here)
-      const myCloudName = "YOUR_CLOUD_NAME_HERE"; // e.g. dx873...
-      const myApiKey = "YOUR_API_KEY_HERE"; // e.g. 837264...
+      const myCloudName = "dbzs3i6zz"; // e.g. dx873...
+      const myApiKey = "625526345957239"; // e.g. 837264...
 
       // Prompt ONLY for the Secret (Never stored in file)
       const userApiSecret = prompt(
@@ -35,8 +35,8 @@
             media_library: {
               name: "cloudinary",
               config: {
-                cloud_name: dbzs3i6zz,
-                api_key: 625526345957239,
+                cloud_name: myCloudName,
+                api_key: myApiKey,
                 api_secret: userApiSecret, // Injected from prompt
                 default_transformations: [{ width: 1000, crop: "limit" }],
               },
