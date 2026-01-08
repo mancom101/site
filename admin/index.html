@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEOM Manager</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+  </head>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      CMS.registerMediaLibrary(cloudinary);
+      const userApiKey = prompt("🔐 Enter Cloudinary API Key:");
+      if (userApiKey) {
+        initCMS({
+          config: {
+            media_library: {
+              name: "cloudinary",
+              config: {
+                cloud_name: "YOUR_CLOUD_NAME_HERE", // REPLACE THIS later!
+                api_key: userApiKey,
+              },
+            },
+            public_folder: "",
+          },
+        });
+      } else {
+        document.body.innerHTML = "<h1>Access Denied</h1>";
+      }
+    </script>
+  </body>
+</html>

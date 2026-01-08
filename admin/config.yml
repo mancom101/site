@@ -1,0 +1,65 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+collections:
+  # 1. ACTIVITIES (Linked to Panels via Tags)
+  - name: "activities"
+    label: "Activities"
+    folder: "_posts"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "list",
+          hint: "IMPORTANT: Add tag like '11thPanel' to link to board",
+        }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # 2. PANELS (The Board Members)
+  - name: "panels"
+    label: "Executive Panels"
+    folder: "_panels"
+    create: true
+    fields:
+      - {
+          label: "Panel Name",
+          name: "title",
+          widget: "string",
+          default: "11th Executive Panel",
+        }
+      - {
+          label: "Filter Tag",
+          name: "filter_tag",
+          widget: "string",
+          hint: "Must match the hashtag used in posts (e.g., 11thPanel)",
+        }
+      - {
+          label: "Board Members",
+          name: "members",
+          widget: "list",
+          fields:
+            [
+              { label: "Name", name: "name", widget: "string" },
+              { label: "Role", name: "role", widget: "string" },
+              { label: "Photo", name: "image", widget: "image" },
+            ],
+        }
+
+  # 3. JOBS (Restricted)
+  - name: "jobs"
+    label: "Job Board"
+    folder: "_jobs"
+    create: true
+    fields:
+      - { label: "Job Title", name: "title", widget: "string" }
+      - { label: "Company", name: "company", widget: "string" }
+      - { label: "Expiration", name: "expires", widget: "datetime" }
+      - { label: "Description", name: "body", widget: "markdown" }

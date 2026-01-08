@@ -1,0 +1,54 @@
+---
+layout: page
+---
+
+<div id="job-gate" class="text-center py-5">
+  <h3>🔒 Student Access Only</h3>
+  <p>Enter the student passcode to view opportunities.</p>
+  <input
+    type="password"
+    id="job-pass"
+    class="form-control d-inline-block w-auto"
+    placeholder="Passcode"
+  />
+  <button onclick="unlockJobs()" class="btn btn-primary">Unlock</button>
+  <p id="error" class="text-danger mt-2" style="display: none">
+    Incorrect Code
+  </p>
+</div>
+
+<div id="job-content" style="display: none">
+  <div class="job-list">
+    {% assign today = site.time | date: '%s' %} {% for job in site.jobs %} {%
+    assign expire = job.expires | date: '%s' %}
+
+    <div class="card mb-3 {% if expire < today %}opacity-50{% endif %}">
+      <div class="card-body">
+        <h4 class="card-title">
+          {{ job.title }} {% if expire < today %}(Expired){% endif %}
+        </h4>
+        <h6 class="card-subtitle mb-2 text-muted">{{ job.company }}</h6>
+        {{ job.content }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  function unlockJobs() {
+    // CHANGE THIS PASSWORD
+    if (document.getElementById("job-pass").value === "aust2026") {
+      document.getElementById("job-gate").style.display = "none";
+      document.getElementById("job-content").style.display = "block";
+      sessionStorage.setItem("job_access", "true");
+    } else {
+      document.getElementById("error").style.display = "block";
+    }
+  }
+  // Auto-login check
+  if (sessionStorage.getItem("job_access") === "true") {
+    document.getElementById("job-gate").style.display = "none";
+    document.getElementById("job-content").style.display = "block";
+  }
+</script>
