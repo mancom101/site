@@ -19,37 +19,26 @@
     <script>
       CMS.registerMediaLibrary(cloudinary);
 
-      // Hardcode the public identifiers (Safe to store here)
-      const myCloudName = "dbzs3i6zz"; // e.g. dx873...
-      const myApiKey = "625526345957239"; // e.g. 837264...
+      initCMS({
+        config: {
+          media_library: {
+            name: "cloudinary",
+            config: {
+              cloud_name: "dbzs3i6zz", // Your Cloud Name
+              api_key: "625526345957239", // Your API Key
 
-      // Prompt ONLY for the Secret (Never stored in file)
-      const userApiSecret = prompt(
-        "🔐 Admin Security: Enter Cloudinary API Secret to unlock full access:"
-      );
+              // We are NOT using the secret, so we use Unsigned Uploads.
+              // Ensure you have an "unsigned" preset in Cloudinary settings.
 
-      if (userApiSecret) {
-        // Initialize with the combined credentials
-        initCMS({
-          config: {
-            media_library: {
-              name: "cloudinary",
-              config: {
-                cloud_name: myCloudName,
-                api_key: myApiKey,
-                api_secret: userApiSecret, // Injected from prompt
-                default_transformations: [{ width: 1000, crop: "limit" }],
-              },
+              default_transformations: [
+                { width: 1000, crop: "limit" }, // Resizes huge images automatically
+              ],
             },
-            // This ensures the CMS uses the full Cloudinary URL in your posts
-            public_folder: "",
           },
-        });
-      } else {
-        // If they cancel/fail, stop access
-        document.body.innerHTML =
-          '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#222b73;color:white;font-family:sans-serif;"><h1>Authentication Failed: Secret Required</h1></div>';
-      }
+          // This ensures the CMS uses the full Cloudinary URL in your posts
+          public_folder: "",
+        },
+      });
     </script>
   </body>
 </html>
