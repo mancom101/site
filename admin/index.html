@@ -4,32 +4,51 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IEOM Manager</title>
+
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
     <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
   </head>
   <body>
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
+
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
     <script>
       CMS.registerMediaLibrary(cloudinary);
-      const userApiKey = prompt("🔐 Enter Cloudinary API Key:");
-      if (userApiKey) {
+
+      // Hardcode the public identifiers (Safe to store here)
+      const myCloudName = "YOUR_CLOUD_NAME_HERE"; // e.g. dx873...
+      const myApiKey = "YOUR_API_KEY_HERE"; // e.g. 837264...
+
+      // Prompt ONLY for the Secret (Never stored in file)
+      const userApiSecret = prompt(
+        "🔐 Admin Security: Enter Cloudinary API Secret to unlock full access:"
+      );
+
+      if (userApiSecret) {
+        // Initialize with the combined credentials
         initCMS({
           config: {
             media_library: {
               name: "cloudinary",
               config: {
-                cloud_name: "YOUR_CLOUD_NAME_HERE", // REPLACE THIS later!
-                api_key: userApiKey,
+                cloud_name: dbzs3i6zz,
+                api_key: 625526345957239,
+                api_secret: userApiSecret, // Injected from prompt
+                default_transformations: [{ width: 1000, crop: "limit" }],
               },
             },
+            // This ensures the CMS uses the full Cloudinary URL in your posts
             public_folder: "",
           },
         });
       } else {
-        document.body.innerHTML = "<h1>Access Denied</h1>";
+        // If they cancel/fail, stop access
+        document.body.innerHTML =
+          '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#222b73;color:white;font-family:sans-serif;"><h1>Authentication Failed: Secret Required</h1></div>';
       }
     </script>
   </body>
